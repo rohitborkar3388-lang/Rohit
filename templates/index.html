@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Environmental Awareness Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar" aria-label="Channels">
+            <div class="sidebar-top">
+                <div class="server-pill" title="EcoChat server">🌱</div>
+                <div class="server-name">EcoChat</div>
+            </div>
+
+            <div class="channel-list" role="navigation" aria-label="Environmental channels">
+                <button class="channel active" type="button" data-topic="general"># general</button>
+                <button class="channel" type="button" data-topic="climate"># climate-change</button>
+                <button class="channel" type="button" data-topic="pollution"># pollution</button>
+                <button class="channel" type="button" data-topic="recycling"># recycling</button>
+                <button class="channel" type="button" data-topic="sustainable"># sustainable-living</button>
+                <button class="channel" type="button" data-topic="plastic"># plastic-waste</button>
+                <button class="channel" type="button" data-topic="water"># water</button>
+                <button class="channel" type="button" data-topic="energy"># clean-energy</button>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="me">
+                    <div class="me-avatar">🙂</div>
+                    <div class="me-meta">
+                        <div class="me-name">You</div>
+                        <div class="me-sub">Learning mode</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <section class="main">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <div class="channel-title">
+                        <div class="hash">#</div>
+                        <div class="title-wrap">
+                            <div class="title" id="channelTitle">general</div>
+                            <div class="status-row">
+                                <span class="status-dot" id="statusDot" aria-hidden="true"></span>
+                                <span class="status-text" id="botStatus">Online</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="topbar-right">
+                    <button class="icon-btn" id="clearChatBtn" type="button" title="Clear chat" aria-label="Clear chat">
+                        🧹
+                    </button>
+                </div>
+            </header>
+
+            <main class="chat-area">
+                <div class="chat-window" id="chatWindow" role="log" aria-live="polite"></div>
+            </main>
+
+            <div class="composer">
+                <div class="chips" id="quickChips" aria-label="Quick suggestions"></div>
+                <div class="input-container">
+                    <div class="input-wrap">
+                        <input
+                            type="text"
+                            id="userInput"
+                            placeholder="Message #general"
+                            autocomplete="off"
+                        >
+                    </div>
+                    <button id="sendButton" class="send-button" type="button">
+                        <span>Send</span>
+                    </button>
+                </div>
+                <div class="hint">Tip: click a channel on the left to switch topics.</div>
+            </div>
+        </section>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
+

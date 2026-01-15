@@ -310,5 +310,11 @@ if __name__ == '__main__':
     print("Server starting on http://127.0.0.1:5000")
     print("=" * 50)
     
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    if __name__ == '__main__':
+        # Load model on startup
+        success, message = load_model()
+        print(message)
+
+        app.run(host='0.0.0.0', port=5000)
+
 

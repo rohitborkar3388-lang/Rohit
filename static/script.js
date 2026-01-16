@@ -24,12 +24,9 @@ const DEFAULT_CHIPS = [
 
 // Initialize welcome message timestamp
 document.addEventListener('DOMContentLoaded', () => {
-    const welcomeTimestamp = document.getElementById('welcomeTimestamp');
-    if (welcomeTimestamp) {
-        welcomeTimestamp.textContent = getCurrentTime();
-    }
     initDiscordLike();
     renderChips(DEFAULT_CHIPS);
+    setupDynamicResize();
 });
 
 /**
@@ -247,7 +244,70 @@ function removeTypingIndicator() {
  */
 function scrollToBottom() {
     // Smooth-ish snap to bottom (prevents jitter while typing)
-    chatWindow.scrollTop = chatWindow.scrollHeight;
+    if (chatWindow) {
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+}
+
+/**
+ * Setup dynamic resizing for chat area
+ */
+function setupDynamicResize() {
+    const appShell = document.querySelector('.app-shell');
+    const chatArea = document.querySelector('.chat-area');
+    
+    if (!appShell || !chatArea) return;
+    
+    // Function to update heights dynamically
+    function updateHeights() {
+        const viewportHeight = window.innerHeight;
+        const bodyPadding = parseInt(getComputedStyle(document.body).paddingTop) * 2 || 40;
+        const availableHeight = viewportHeight - bodyPadding;
+        
+        // Set dynamic height for app shell
+        appShell.style.height = `${Math.max(600, Math.min(availableHeight, viewportHeight))}px`;
+        
+        // Ensure chat area fills available space
+        const topbarHeight = document.querySelector('.topbar')?.offsetHeight || 60;
+        const composerHeight = document.querySelector('.composer')?.offsetHeight || 120;
+        const chatAreaHeight = availableHeight - topbarHeight - composerHeight - 2;
+        
+        if (chatAreaHeight > 0) {
+            chatArea.style.minHeight = `${chatAreaHeight}px`;
+        }
+        
+        // Force scroll to bottom after resize
+        setTimeout(scrollToBottom, 100);
+    }
+    
+    // Initial calculation
+    updateHeights();
+    
+    // Update on window resize with debounce
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(updateHeights, 150);
+    });
+    
+    // Update on orientation change
+    window.addEventListener('orientationchange', () => {
+        setTimeout(updateHeights, 200);
+    });
+    
+    // Update when DOM content changes (messages added)
+    if (typeof MutationObserver !== 'undefined') {
+        const observer = new MutationObserver(() => {
+            updateHeights();
+        });
+        
+        if (chatWindow) {
+            observer.observe(chatWindow, {
+                childList: true,
+                subtree: true
+            });
+        }
+    }
 }
 
 /**

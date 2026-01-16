@@ -70,12 +70,12 @@ def load_model():
 # CHAT LOGIC
 # ------------------------------------------------------------------
 HUMAN_OPENERS = [
-    "Got you.", "Good question.", "Alright—here’s the idea:",
+    "Got you.", "Good question.", "Alright—here's the idea:",
     "Sure thing.", "Okay, so…"
 ]
 
 FALLBACKS = [
-    "I didn’t fully get that. Can you rephrase?",
+    "I didn't fully get that. Can you rephrase?",
     "Try asking with keywords like climate, recycling, or pollution."
 ]
 

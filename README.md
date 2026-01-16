@@ -22,12 +22,14 @@ A fully interactive AI-powered web application that educates users about environ
 
 2. **Install Python dependencies**:
    ```bash
+   pip install -r requirements.txt
    ```
 
 3. **Train the AI model**:
    ```bash
-   python train.py
+   jupyter notebook train.ipynb
    ```
+   Or open `train.ipynb` in Jupyter Notebook/JupyterLab and run all cells.
    This will create `model.pkl` and `intents_data.pkl` files.
 
 ## 🎯 Usage
@@ -57,8 +59,8 @@ A fully interactive AI-powered web application that educates users about environ
 Ai Environmenta Chatbot/
 │
 ├── app.py                 # Flask backend server
-├── train.py              # Model training script
-├── intents.json          # Training dataset
+├── train.ipynb           # Model training notebook
+├── intents.csv           # Training dataset
 ├── requirements.txt      # Python dependencies
 ├── README.md            # Project documentation
 │
@@ -113,8 +115,8 @@ The model is trained using:
 - **Preprocessing**: Lowercasing, special character removal, stemming
 
 To retrain the model with new data:
-1. Update `intents.json` with new patterns and responses
-2. Run `python train.py` again
+1. Update `intents.csv` with new patterns and responses
+2. Open and run `train.ipynb` again
 
 ## 🐛 Troubleshooting
 
@@ -133,7 +135,7 @@ This project is open source and available for educational purposes.
 
 ## 🤝 Contributing
 
-Feel free to expand the intents dataset in `intents.json` to add more environmental topics and responses!
+Feel free to expand the intents dataset in `intents.csv` to add more environmental topics and responses!
 
 ## 🌍 Impact
 

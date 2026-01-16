@@ -53,7 +53,7 @@ def load_model():
     global model, intents_data
 
     if not os.path.exists('model.pkl'):
-        return False, "Model not found. Please run train.py first."
+        return False, "Model not found. Please run train.ipynb first."
 
     try:
         with open('model.pkl', 'rb') as f:

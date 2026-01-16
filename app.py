@@ -13,7 +13,6 @@ import nltk
 from nltk.stem import PorterStemmer
 import re
 import random
-import openai
 
 # ------------------------------------------------------------------
 # NLTK SETUP (SAFE & CORRECT)
@@ -36,9 +35,6 @@ intents_data = None
 
 MODEL_NAME = os.getenv('MODEL_NAME', 'local')
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
-
-if OPENAI_API_KEY:
-    openai.api_key = OPENAI_API_KEY
 
 # ------------------------------------------------------------------
 # UTIL FUNCTIONS
@@ -100,8 +96,21 @@ def get_response(user_input):
     return {"text": random.choice(FALLBACKS), "tag": "fallback", "confidence": 0.0}
 
 def get_response_openai(user_input):
+    try:
+        import openai
+    except ImportError:
+        return {
+            "text": "OpenAI package not installed. Please install it with: pip install openai",
+            "tag": "error",
+            "confidence": 0.0
+        }
+    
     if not OPENAI_API_KEY:
         raise RuntimeError("OPENAI_API_KEY not set")
+    
+    # Set API key if not already set
+    if not hasattr(openai, 'api_key') or not openai.api_key:
+        openai.api_key = OPENAI_API_KEY
 
     response = openai.ChatCompletion.create(
         model=MODEL_NAME,
